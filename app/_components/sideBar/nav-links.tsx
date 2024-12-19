@@ -13,12 +13,12 @@ export const items = [
     },
     {
         title: "Inbox",
-        url: "#",
+        url: "/inbox",
         icon: Inbox,
     },
     {
         title: "Calendar",
-        url: "#",
+        url: "/calendar",
         icon: Calendar,
     },
     {
