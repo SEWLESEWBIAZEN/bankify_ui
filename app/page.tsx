@@ -1,13 +1,16 @@
-import { ModeToggle } from "./_components/theme/theme-toggler";
+import { Metadata } from "next";
 
+let metadata: Metadata = {
+  title: 'Bankify | SewLabs',
+  description: 'Bankify is a digital banking solution that simplifies banking and transactions for individuals and businesses.',
+  keywords: 'bankify, bank, financial, services, system'
+};
 
 export default function Home() {
   return (
     <div>
       <div>Here goes the main page content</div>
-      {/* <span className="flex flex-row w-full justify-end">
-        <ModeToggle />
-      </span> */}
+     
     </div>
   );
 }

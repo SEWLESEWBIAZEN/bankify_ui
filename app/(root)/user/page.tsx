@@ -2,10 +2,10 @@
 import PageContent from '@/app/_components/layout/pageContent'
 import React from 'react'
 
-const Page = async () => {
+const User = async () => {
     return (
-        <PageContent>Page</PageContent>
+        <PageContent>User</PageContent>
     )
 }
 
-export default Page
+export default User

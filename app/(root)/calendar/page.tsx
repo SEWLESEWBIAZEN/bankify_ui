@@ -2,10 +2,10 @@
 import PageContent from '@/app/_components/layout/pageContent'
 import React from 'react'
 
-const Page = async () => {
+const Calendar = async () => {
     return (
-        <PageContent>Page</PageContent>
+        <PageContent>Calendar</PageContent>
     )
 }
 
-export default Page
+export default Calendar

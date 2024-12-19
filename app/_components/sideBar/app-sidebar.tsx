@@ -28,12 +28,12 @@ export function AppSidebar() {
         <Sidebar>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Bankify</SidebarGroupLabel>
+                    <SidebarGroupLabel className="text-primary dark:text-white font-bold text-[2rem] my-[0.5rem]">Bankify</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (
-                                <SidebarMenuItem key={item.title} className={`${isActive(item.url) ? "text-green-500" : ""}`}>
-                                    <SidebarMenuButton asChild>
+                                <SidebarMenuItem key={item.title}  >
+                                    <SidebarMenuButton asChild className={`${isActive(item.url) ? "bg-primary dark:bg-primary dark:text-primary-foreground text-primary-foreground" : ""}`}>
                                         <a href={item.url}>
                                             <item.icon />
                                             <span>{item.title}</span>
