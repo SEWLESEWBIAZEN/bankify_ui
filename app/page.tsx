@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <PageContent>
-    <div >
-      <h1>Welcome to Bankify</h1>
-      <p>Your digital banking solution.</p>
-    </div>
+      <div>
+        <h1>Welcome to Bankify</h1>
+        <p>Your digital banking solution.</p>
+      </div>
     </PageContent>
   );
 }

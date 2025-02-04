@@ -1,18 +1,19 @@
-
 import PageContent from '@/app/_components/layout/pageContent'
 import Breadcrumb from '@/components/ui/breadcrumb'
 import React from 'react'
 
-const Calendar = async () => {
+const Settings = async () => {
     return (
         <div>
             <Breadcrumb breadcrumbs={[
-                { label: 'Calendar', to: '/calendar', active: true }
+                { label: 'Settings', to: '/settings', active: true }
             ]}
             />
-            <PageContent>Calendar</PageContent>
+            <PageContent>
+                Settings
+            </PageContent>
         </div>
     )
 }
 
-export default Calendar
+export default Settings

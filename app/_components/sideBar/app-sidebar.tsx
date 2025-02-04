@@ -10,8 +10,8 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { items } from "./nav-links"
-import { useState } from "react"
 import { usePathname } from "next/navigation"
+import Link from "next/link"
 
 // Menu items.
 export function AppSidebar() {
@@ -34,10 +34,10 @@ export function AppSidebar() {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}  >
                                     <SidebarMenuButton asChild className={`${isActive(item.url) ? "bg-primary dark:bg-primary dark:text-primary-foreground text-primary-foreground" : ""}`}>
-                                        <a href={item.url}>
+                                        <Link href={item.url} passHref>
                                             <item.icon />
                                             <span>{item.title}</span>
-                                        </a>
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
