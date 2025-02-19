@@ -1,16 +1,18 @@
-
-import PageContent from '@/app/_components/layout/pageContent'
-import Breadcrumb from '@/components/ui/breadcrumb'
 import React from 'react'
+import PageContent from '@/app/_components/layout/pageContent';
+import Users from '@/app/_components/users';
+import Breadcrumb from '@/components/ui/breadcrumb';
 
 const User = async () => {
     return (
-        <div>
+        <div className=''>
             <Breadcrumb breadcrumbs={[
                 { label: 'User', to: '/user', active: true }
             ]}
             />
-            <PageContent>User</PageContent>
+            <PageContent>
+                <Users />
+            </PageContent>
         </div>
     )
 }

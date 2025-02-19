@@ -1,5 +1,7 @@
 import PageContent from '@/app/_components/layout/pageContent'
+import getAllUsers from '@/app/_lib/data/users';
 import Breadcrumb from '@/components/ui/breadcrumb';
+import { Table } from '@/components/ui/table';
 import { Metadata } from 'next';
 import React from 'react'
 export const dynamic = 'force-dynamic'
@@ -11,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
+      
     return (
         <div>
             <Breadcrumb breadcrumbs={[
@@ -19,7 +22,8 @@ const Home = async () => {
             />
             <PageContent>
                 Home
-            </PageContent>
+            </PageContent>           
+            
         </div>
     )
 }

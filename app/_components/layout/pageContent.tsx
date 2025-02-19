@@ -1,9 +1,9 @@
 function PageContent({ children }: { children: React.ReactNode }) {
     return (
-        <main className='p-4 w-full lg:p-6 space-y-4'>
+        <span className="mt-6 px-2">
             {children}
-        </main>
-    )
+        </span>
+    );
 }
 
-export default PageContent
+export default PageContent;
