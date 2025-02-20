@@ -6,7 +6,7 @@ import { columns } from './columns';
 const Users = async () => {
     const users = await getAllUsers();
     return (
-        <div className='flex flex-1 justify-center w-[500px] md:w-[600px] lg:w-[700px] xl:w-[1000px] overflow-x-auto'>
+        <div className='flex overflow-x-auto'>
             <DataTable data={users ?? []} columns={columns} />
         </div>
     )

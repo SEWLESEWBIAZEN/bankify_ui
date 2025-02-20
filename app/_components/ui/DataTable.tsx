@@ -40,13 +40,10 @@ export function DataTable<TData, TValue>({
     data,
     setTable,
 }: DataTableProps<TData, TValue>) {
-
     const [rowSelection, setRowSelection] = React.useState({})
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-        []
-    )
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [filtering, setFiltering] = React.useState("")
 
@@ -87,8 +84,8 @@ export function DataTable<TData, TValue>({
 
 
     return (
-        <div className="flex flex-col space-y-4 text-gray-700 dark:text-slate-50 text-base px-2 pb-2 ">
-            <div className="flex items-center py-4 w-full ">
+        <div className="space-y-4 text-gray-700 text-base">
+            <div className="flex items-center py-4">
                 <Input
                     placeholder="Filter emails..."
                     value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -124,45 +121,46 @@ export function DataTable<TData, TValue>({
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <Table className="w-full">
-                <TableHeader className="w-full">
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id} className="dark:border-slate-50 dark:text-slate-50">
-                            {headerGroup.headers.map((header) => (
-                                <TableHead key={header.id} colSpan={header.colSpan} className="font-semibold dark:text-slate-200">
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
-                                </TableHead>
-                            ))}
-                        </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody className="w-full">
-                    {table?.getRowModel()?.rows?.length ? (
-                        table?.getRowModel()?.rows?.map((row) => (
-                            <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="w-full">
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id} >
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </TableCell>
+            <div className="rounded-xl border border-gray-50">
+                <Table>
+                    <TableHeader>
+                        {table.getHeaderGroups().map((headerGroup) => (
+                            <TableRow key={headerGroup.id} className="dark:border-slate-50 dark:text-slate-50">
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id} colSpan={header.colSpan} className="font-semibold dark:text-slate-200">
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
                                 ))}
                             </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                        ))}
+                    </TableHeader>
+                    <TableBody className="">
+                        {table?.getRowModel()?.rows?.length ? (
+                            table?.getRowModel()?.rows?.map((row) => (
+                                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="">
+                                    {row.getVisibleCells().map((cell) => (
+                                        <TableCell key={cell.id} >
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={columns.length} className="h-24 text-center">
+                                    No results.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
             <DataTablePagination table={table} />
-
         </div>
     )
 }
