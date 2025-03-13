@@ -16,7 +16,7 @@ const PageNavBar = ({ navItems }: { navItems: NavLink[] }) => {
   const { setIsSidebarOpen } = useCentralStore();
 
   return (
-    <header className="top-0 left-0 lg:left-60 right-0 w-full h-auto py-4 flex items-center bg-slate-100 dark:bg-black shadow-sm shadow-primary z-50">
+    <header className="top-0 left-0 lg:left-60 right-0 w-full h-auto py-4 flex items-center bg-slate-100 dark:bg-black z-50">
       <nav className="ms-6 flex flex-wrap items-center gap-6 text-slate-500 px-4 py-1 text-primary-foreground dark:text-slate-100">
         {navItems.map(({ name, icon: Icon,to }) => (
           <Link key={name} href={to} className="flex items-center gap-2 hover:text-primary transition">

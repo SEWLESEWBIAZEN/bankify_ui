@@ -1,4 +1,5 @@
 'use client'
+import UsersPage from "@/app/_components/one-time/users";
 import PageNavBar from "@/app/_components/reusable/PageNavBar";
 import { Banknote, BookA,  IdCard,  Smartphone,  User,  UserCheck,  Users } from "lucide-react";
 import React from "react";
@@ -15,7 +16,9 @@ const Page = () => {
   return (
     <div>
       <PageNavBar navItems={navItems} />
-      <main className="mt-2 p-4">Users Page content</main>
+      <main className="mt-2 p-4">
+        <UsersPage/>
+      </main>
     </div>
   );
 };
