@@ -3,6 +3,9 @@ export default {
     content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
     theme: {
       extend: {
+        fontFamily: {
+          custom: ["var(--font-poppins)", "sans-serif"], // Example custom font
+        },
         colors: {
           bprimary: "var(--bprimary)",
           "bprimary-foreground": "var(--bprimary-foreground)",

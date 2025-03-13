@@ -3,6 +3,13 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "600"], // Choose the font weights you need
+  variable: "--font-poppins", // Optional: Define a CSS variable
+});
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
@@ -83,7 +90,7 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
     <td
       data-slot="table-cell"
       className={cn(
-        "p-2 align-middle  whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+        `p-2 align-middle truncate font-mono [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]`,
         className
       )}
       {...props}
