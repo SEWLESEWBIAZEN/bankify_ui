@@ -1,24 +1,19 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { getAllUsers } from '@/app/_lib/data/users'
+import React from 'react'
 import { DataTable } from '../../reusable/DataTable'
 import columns from './column'
+import { Button } from '@/components/ui/button'
+import { PlusSquare } from 'lucide-react'
+import Link from 'next/link'
 
-const UsersPage = () => {
-
-    const [users, setUsers]=useState([])
-    useEffect(()=>{
-        const fetchData=async()=>{
-            const response=await getAllUsers()
-            setUsers(response)
-        }
-        fetchData()
-    },[])
-    console.log(users)
+const UsersPage = ({users}:{users:any}) => { 
 
   return (
-    <div>
-        <DataTable data={users??[]} columns={columns}/>
+    <div>    
+      <Link className='flex flex-1 justify-end mb-4' href="">
+        <Button className='flex flex-row items-center gap-1 cursor-pointer'><PlusSquare/> Add User</Button>
+      </Link>
+        <DataTable data={users} columns={columns}/>
     </div>
   )
 }

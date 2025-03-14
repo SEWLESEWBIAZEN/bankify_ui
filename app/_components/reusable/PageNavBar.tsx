@@ -1,43 +1,75 @@
 "use client";
 
 import { useCentralStore } from "@/app/CenteralStore";
-import Link from "next/link";
+import { ModeToggle } from "@/components/theme-togle";
 import { Menu } from "lucide-react";
 import React from "react";
-import { ModeToggle } from "@/components/theme-togle";
 
-type NavLink = {
-  name: string;
-  icon: React.ElementType;
-  to:string
-};
+const PageNavbarLeftContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<'div'>
+>((props, ref) =>
+  <div
+    ref={ref}
+    className='flex flex-col sm:flex-row items-center justify-start md:justify-between gap-2 h-auto md:h-10'
+    {...props} />
+);
 
-const PageNavBar = ({ navItems }: { navItems: NavLink[] }) => {
-  const { setIsSidebarOpen } = useCentralStore();
+PageNavbarLeftContent.displayName = 'PageNavbarLeftContent'
 
-  return (
-    <header className="top-0 left-0 lg:left-60 right-0 w-full h-auto py-4 flex items-center bg-slate-100 dark:bg-black z-50">
-      <nav className="ms-6 flex flex-wrap items-center gap-6 text-slate-500 px-4 py-1 text-primary-foreground dark:text-slate-100">
-        {navItems.map(({ name, icon: Icon,to }) => (
-          <Link key={name} href={to} className="flex items-center gap-2 hover:text-primary transition">
-            <Icon size={18} className="text-slate-700 dark:text-slate-100" />
-            <span className="text-sm font-medium">{name}</span>
-          </Link>
-        ))}
-      </nav>
 
-      {/* Sidebar toggle button (only visible on small screens) */}
-      <div className="fixed right-1  flex flex-col justify-between items-center">
-      <button 
-        onClick={() => setIsSidebarOpen(true)} 
-        className="lg:hidden text-gray-500 h-8 w-8 flex items-center justify-center"
-      >
-        <Menu size={16} />
-      </button>      
-      <ModeToggle/>
-      </div>
-    </header>
-  );
-};
+const PageNavbarRightContent = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<'div'>
+>((props, ref) =>
+  <div
+    ref={ref}
+    className='text-gray-500 hidden md:flex gap-2'
+    {...props} />
+);
 
-export default PageNavBar;
+PageNavbarRightContent.displayName = 'PageNavbarRightContent'
+
+
+const PageNavbarIconButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentPropsWithoutRef<'button'>>
+  (({ className, ...props }, ref) =>
+    <button
+      ref={ref}
+      className='all-center h-8 w-8 duration-200 hover:bg-gray-100 rounded-lg'
+      {...props} />
+  )
+
+PageNavbarIconButton.displayName = 'PageNavbarIconButton'
+
+const PageNavbarPrimaryButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentPropsWithoutRef<'button'>>
+  (({ className, ...props }, ref) =>
+    <button
+      ref={ref}
+      className='h-8 gap-1 bg-primary hidden py-1 px-2 duration-200 text-white rounded-lg text-xs md:flex items-center justify-center'
+      {...props}
+    />
+  )
+PageNavbarPrimaryButton.displayName = 'PageNavbarPrimaryButton'
+
+function PageNavBar({ children }: { children: React.ReactNode }) {
+  const { setIsSidebarOpen } = useCentralStore()
+  return (    
+      <div className='flex p-4 md:p-6 text-gray-500 justify-between items-center bg-slate-100 dark:bg-black z-30'>
+        {children}
+        <div className="flex flex-col all-center justify-between">
+          <button onClick={() => setIsSidebarOpen(true)} className='text-gray-500 h-8 w-8 lg:hidden'>
+            <Menu size={16} />
+          </button>
+          <ModeToggle />
+        </div>      
+    </div>
+  )
+}
+
+export default PageNavBar
+
+export { PageNavbarLeftContent, PageNavbarRightContent, PageNavbarIconButton, PageNavbarPrimaryButton }

@@ -29,7 +29,7 @@ import { AArrowDown, AArrowUp, ArrowUpDown } from "lucide-react"
     }
   
     return (
-      <div className={cn("flex items-center space-x-2", className)}>
+      <div className={cn("flex items-center space-x-2 ", className)}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -47,7 +47,7 @@ import { AArrowDown, AArrowUp, ArrowUpDown } from "lucide-react"
               )}
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="bg-white">
+          <DropdownMenuContent align="start" className="bg-primary">
             <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
               <AArrowUp  className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
               Asc

@@ -49,8 +49,8 @@ const columns: ColumnDef<User, any>[] = [
           <Avatar>
             <AvatarImage src={`${profilePicture}`} alt="Attorney" />
             <AvatarFallback>
-              <div className="relative inline-flex items-center justify-center w-10 h-10 border-2 border-cyan-200  overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                <span className="font-medium text-primary">{getInitials(`${row.getValue("firstName")} ${row.getValue("lastName")}`)}</span>
+              <div className="relative inline-flex items-center justify-center w-10 h-10 border-2 border-cyan-200  overflow-hidden bg-gray-100 rounded-full bg-primary">
+                <span className="font-medium text-primary-foreground">{getInitials(`${row.getValue("firstName")} ${row.getValue("lastName")}`)}</span>
               </div>
             </AvatarFallback>
           </Avatar>
@@ -72,7 +72,7 @@ const columns: ColumnDef<User, any>[] = [
   {
     accessorKey: "lastName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="last Name" />
+      <DataTableColumnHeader column={column} title="Last Name" />
     ),
     cell: ({ row }) => {
       return(<div>{row.getValue("lastName")}</div>)

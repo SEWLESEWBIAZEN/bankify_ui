@@ -1,15 +1,7 @@
 "use client"
 
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
-import { Poppins } from "next/font/google";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "600"], // Choose the font weights you need
-  variable: "--font-poppins", // Optional: Define a CSS variable
-});
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (

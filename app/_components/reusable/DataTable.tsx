@@ -24,6 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { DataTablePagination } from "./DataTablePagination"
+import { ColumnViewOptions } from "./ColumnViewOptions"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -82,10 +83,12 @@ export function DataTable<TData, TValue>({
     }
   }, [table]);
 
-
   return (
-    <div className="space-y-4 text-gray-700 text-base">   
-      <div className="rounded-xl border dark:border-muted">
+    <div className="space-y-4 text-gray-700 text-base">  
+    {/* <div className="w-full flex-1 justify-start lg:-mt-10 mt-0">
+   
+    </div>  */}
+      <div className="rounded-xl border dark:border-muted">        
         <Table>
           <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (
