@@ -1,3 +1,5 @@
+********for better prievew, click on "readme.md" -> click on "code" tab next to "preview"************
+
 Here is the file structure of my project, bankify_ui. It is a banking application(frontend) which automates manual works of a financial insitution that is small sized like credit associations.
 
 ├── .gitignore
