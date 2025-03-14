@@ -20,7 +20,7 @@ export function ColumnViewOptions<TData>({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <OutlineButton
-          className=" h-8 lg:block bg-white text-center justify-center items-center"
+          className=" h-8 lg:block bg-white dark:bg-black text-center justify-center items-center"
         >
           <Eye className="mr-2 h-6 w-6 flex md:hidden" />
          <span className="hidden md:block ">View</span> 
