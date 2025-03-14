@@ -10,7 +10,7 @@ export default function Sidebar() {
         <div className='fixed w-60 shrink-0 md:block h-screen top-0 overflow-hidden z-60'>
             <div className='w-full h-full bg-primary border-r'>
                 {/* logo */}
-                <a href="/dashboard" className="flex gap-2 p-2">
+                <a href="/ok/dashboard" className="flex gap-2 p-2">
                     {/* <Image src="/next.svg" alt="logo" width={100} height={70} className="w-12" /> */}
                     <p className="text-md font-semibold text-primary-foreground mt-3 font-lobster">Bankify</p>
                 </a>           

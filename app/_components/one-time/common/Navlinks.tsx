@@ -9,12 +9,12 @@ const Navlinks = () => {
     const links = [
         {
             label: "Dashboard",
-            to: "/dashboard",
+            to: "/ok/dashboard",
             icon: ChartSpline,
         },
         {
             label: "Users",
-            to: "/users",
+            to: "/ok/users",
             icon:Users,
         },
     ];

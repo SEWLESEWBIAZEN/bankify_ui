@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React from "react"
 import Sidebar from "../_components/one-time/common/Sidebar";
 import { useCentralStore } from "../CenteralStore";
 
@@ -10,6 +10,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <>           
             <div
                 className={`${isSidebarOpen ? 'overflow-hidden' : ''} h-screen`}
+                
             >
                 {/* backdrop */}
                 {isSidebarOpen && (
