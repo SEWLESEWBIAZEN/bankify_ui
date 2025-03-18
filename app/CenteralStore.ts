@@ -12,11 +12,7 @@ interface centralStore {
 
     accessToken: string | null
     setAccessToken: (token: string) => void
-    initializeAccessToken: () => void
-
-    idToken: string | null
-    setIdToken: (token: string) => void
-    initializeIdToken: () => void
+    initializeAccessToken: () => void 
 
     claims: any | null;
     setClaims: (claimsString: string) => void;
@@ -41,12 +37,6 @@ export const useCentralStore = create<centralStore>((set, get) => ({
         set({ accessToken: token })
     },
 
-    idToken: null,
-    setIdToken: (token) => set({ idToken: token }),
-    initializeIdToken: () => {
-        const token = document.cookie.replace(/(?:(?:^|.*;\s*)idToken\s*=\s*([^;]*).*$)|^.*$/, "$1") || null
-        set({ idToken: token })
-    },
     claims: null, // Initialize claims as an object  
     setClaims: (claimsString) => {
         const parsedClaims: any = claimsString;
