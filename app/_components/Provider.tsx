@@ -3,6 +3,7 @@ import { SessionProvider } from 'next-auth/react';
 import React, { ReactNode, useEffect } from 'react'
 import { logOut } from '../_lib/actions/auth';
 import { useCentralStore } from '../CenteralStore';
+import { usePathname } from 'next/navigation';
 type ChildrenProp = {
   children: ReactNode;
   claims: any;
@@ -10,6 +11,7 @@ type ChildrenProp = {
   expiry: string;
 }
 const Provider = ({ children, claims, name, expiry }: ChildrenProp) => {
+  const pathname=usePathname()
   useEffect(() => {
     if (expiry) {
       const expiryDate = new Date(expiry);

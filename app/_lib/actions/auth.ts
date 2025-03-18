@@ -1,7 +1,9 @@
 "use server"
-import { signIn, signOut } from "@/auth";
+import { signIn ,signOut } from "@/auth";
 import { z } from "zod";
 import { AuthError } from "next-auth";
+
+
 //authenticate
 export async function authenticate(
   prevState: string | undefined,
@@ -22,7 +24,7 @@ export async function authenticate(
   }
 }
 
-export const logOut = async () => {
+export const logOut = async () => {  
   await signOut();
 };
 

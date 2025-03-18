@@ -3,8 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import { AuthConfig, getUser } from './app/_services/authService';
 import { User } from './definitions/type-definitions/user';
-import { authSecret } from './app/_services/envService';
-
+import { authSecret, authUrl, baseUrl } from './app/_services/envService';
 declare module 'next-auth' {
   interface Session {
     user: {
@@ -16,7 +15,6 @@ declare module 'next-auth' {
       expiry?: string;
     } & DefaultSession['user'];
   }
-
   interface User {
     token?: string;
     username?: string;
@@ -26,7 +24,6 @@ declare module 'next-auth' {
     expiry?: string;
   }
 }
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...AuthConfig,
   providers: [
@@ -58,7 +55,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   secret: authSecret,
-  callbacks: {
+  callbacks: { async redirect({ url, baseUrl }) {
+    
+    // If the URL contains a callbackUrl, redirect to that URL
+    if (url.includes("callbackUrl")) {
+      const callbackUrl = new URL(url).searchParams.get("callbackUrl");
+      return callbackUrl || baseUrl;
+    }
+    // Default behavior
+    return baseUrl;
+  },
     async jwt({ token, user }) {
       if (user) {
         const expiryInHours = Number(process.env.TOKEN_EXPIRY) || 4;

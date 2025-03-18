@@ -60,8 +60,8 @@ function PageNavBar({ children }: { children: React.ReactNode }) {
   return (    
       <div className='flex p-4 md:p-6 text-gray-500 justify-between items-center bg-slate-100 dark:bg-black z-30'>
         {children}
-        <div className="flex flex-col all-center justify-between">
-          <button onClick={() => setIsSidebarOpen(true)} className='text-gray-500 h-8 w-8 lg:hidden'>
+        <div className="flex flex-col all-center justify-between gap-6">
+          <button onClick={() => setIsSidebarOpen(true)} className='text-gray-500 h-8 w-8 lg:hidden cursor-pointer'>
             <Menu size={16} />
           </button>
           <ModeToggle />
