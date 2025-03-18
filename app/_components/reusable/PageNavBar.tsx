@@ -58,7 +58,7 @@ PageNavbarPrimaryButton.displayName = 'PageNavbarPrimaryButton'
 function PageNavBar({ children }: { children: React.ReactNode }) {
   const { setIsSidebarOpen } = useCentralStore()
   return (    
-      <div className='flex p-4 md:p-6 text-gray-500 justify-between items-center bg-slate-100 dark:bg-black z-30'>
+      <div className='flex p-4 md:p-6 text-gray-500 justify-between items-center bg-slate-100 dark:bg-slate-900 z-30'>
         {children}
         <div className="flex flex-col all-center justify-between gap-6">
           <button onClick={() => setIsSidebarOpen(true)} className='text-gray-500 h-8 w-8 lg:hidden cursor-pointer'>

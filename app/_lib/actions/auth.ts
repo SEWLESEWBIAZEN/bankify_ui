@@ -29,7 +29,6 @@ export const logOut = async () => {
 };
 
 //change password state
-
 export type ChangePasswordState = {
   success?: string | null;
   submitError?: string | null;

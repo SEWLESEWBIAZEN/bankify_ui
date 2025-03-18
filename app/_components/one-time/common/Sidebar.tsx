@@ -8,7 +8,6 @@ import { logOut } from '@/app/_lib/actions/auth';
 import { useCentralStore } from '@/app/CenteralStore';
 import { KeyRound, LogOut, User2Icon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-
 export default function Sidebar() {
     const { fullName } = useCentralStore();
 
@@ -52,7 +51,6 @@ export default function Sidebar() {
                                             <LogOut size={18} className='rotate-180' />
                                             Sign Out
                                         </button>
-
                                     </div>
                                 </DropdownMenuContent>
                             </DropdownMenu>

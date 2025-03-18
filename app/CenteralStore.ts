@@ -20,6 +20,9 @@ interface centralStore {
     fullName: string | null;
     setFullName: (name: string) => void;
 
+    redirectionUrl:string |null;
+    setRedirectionUrl:(url:string | null)=>void;
+
 }
 
 export const useCentralStore = create<centralStore>((set, get) => ({
@@ -45,4 +48,8 @@ export const useCentralStore = create<centralStore>((set, get) => ({
 
     fullName: null,
     setFullName: (name) => set({ fullName: name }),
+
+    redirectionUrl:null,
+    setRedirectionUrl:(url:string | null)=>set({redirectionUrl:url})
+
 }))

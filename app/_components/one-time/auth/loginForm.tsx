@@ -1,12 +1,13 @@
 'use client';
 import { useActionState, useState } from 'react';
-// import { authenticate } from '@/app/_lib/actions/auth';
 import { CircleAlert, CircleUserRound, Eye, EyeOff } from 'lucide-react';
 import { ThreeDot } from 'react-loading-indicators';
-import { useCentralStore } from '@/app/CenteralStore';
 import { authenticate } from '@/app/_lib/actions/auth';
+// import { useSearchParams } from 'next/navigation';
+// import { useCentralStore } from '@/app/CenteralStore';
 
 export default function LoginForm() {
+  // const {setRedirectionUrl} =useCentralStore();
   const origin = process.env.AUTH_URL || 'http://localhost:3000';
   const [errorMessage, formAction, isPending] = useActionState(authenticate, undefined);
   const [showPassword, setShowPassword] = useState(false)
@@ -15,6 +16,9 @@ export default function LoginForm() {
     username: '',
     password: ''
   })
+  // const searchParams = useSearchParams();
+  // const callbackUrl = searchParams.get("callbackUrl"); // Get the callbackUrl value
+  // setRedirectionUrl(callbackUrl)
 
   return (
     <>
