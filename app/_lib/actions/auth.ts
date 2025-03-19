@@ -48,6 +48,12 @@ const ChangePasswordSchema = z.object({
   path: ['confirmPassword'], // Optional: Highlights the specific field causing the issue
 });
 
+
+//Register user
+export async function registerUser(){
+  
+}
+
 //change password action
 // export async function changePassword(prevState: ChangePasswordState, formData: FormData): Promise<ChangePasswordState> {
 

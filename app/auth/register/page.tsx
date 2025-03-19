@@ -1,14 +1,15 @@
 
-import LoginForm from "@/app/_components/one-time/auth/loginForm";
+
+import RegisterForm from "@/app/_components/one-time/auth/registerForm";
 import { Metadata } from "next";
 
 export const metadata:Metadata={
-    title:"login | Bankify"
+    title:"register | Bankify"
 }
-export default function LoginPage(){
+export default function RegisterPage(){
     return(
     <div className="relative mx-auto flex w-full max-w-[600px] flex-col space-y-2.5 p-4 md:-mt-32">
-        <LoginForm/>
+        <RegisterForm/>
     </div>
     )
 }

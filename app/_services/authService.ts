@@ -9,8 +9,8 @@ export const AuthConfig: NextAuthConfig = {
   trustHost: true,
   pages: {
     signIn: '/auth/login',
-
   },
+  
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;

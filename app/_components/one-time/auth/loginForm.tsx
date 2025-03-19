@@ -3,11 +3,9 @@ import { useActionState, useState } from 'react';
 import { CircleAlert, CircleUserRound, Eye, EyeOff } from 'lucide-react';
 import { ThreeDot } from 'react-loading-indicators';
 import { authenticate } from '@/app/_lib/actions/auth';
-// import { useSearchParams } from 'next/navigation';
-// import { useCentralStore } from '@/app/CenteralStore';
+import Link from 'next/link';
 
 export default function LoginForm() {
-  // const {setRedirectionUrl} =useCentralStore();
   const origin = process.env.AUTH_URL || 'http://localhost:3000';
   const [errorMessage, formAction, isPending] = useActionState(authenticate, undefined);
   const [showPassword, setShowPassword] = useState(false)
@@ -16,9 +14,6 @@ export default function LoginForm() {
     username: '',
     password: ''
   })
-  // const searchParams = useSearchParams();
-  // const callbackUrl = searchParams.get("callbackUrl"); // Get the callbackUrl value
-  // setRedirectionUrl(callbackUrl)
 
   return (
     <>
@@ -78,7 +73,7 @@ export default function LoginForm() {
                   <button disabled={isPending} className=" py-2 px-6 text-sm tracking-wide rounded-none text-white bg-primary hover:bg-stone-500 cursor-pointer focus:outline-none items-center">
                     {isPending ? "Signing" : "Sign In"} {isPending ? <ThreeDot size='small' color="white" /> : ""}
                   </button>
-                  <button onClick={() => setLogin(false)} className='w-full/3 font-semibold cursor-pointer hover:bg-slate-100 px-6 rounded-none -py-1 hover:bg-slate-900 '>Cancel</button>
+                  <button onClick={() => setLogin(false)} className='w-full/3 font-semibold cursor-pointer hover:bg-slate-100 px-6 rounded-none -py-1 dark:hover:bg-slate-900  hover:bg-slate-100'>Cancel</button>
                 </div>
                 <div
                   className="flex h-8 items-end space-x-1"
@@ -95,6 +90,7 @@ export default function LoginForm() {
               </div>
             </div>
           </div>
+          <span className='w-full px-8 flex flex-row gap-2 items-start justify-start text-start '>Have no account? <Link href="/auth/register" className='text-primary font-semibold'>Register</Link></span>
         </div>
       </form>
     </>
