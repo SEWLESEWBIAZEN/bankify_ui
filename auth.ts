@@ -63,11 +63,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return baseUrl;
     },
     async jwt({ token, user }) {
+      
       if (user) {
         const expiryInHours = Number(process.env.TOKEN_EXPIRY) || 4;
         if (isNaN(expiryInHours)) {
           throw new Error('Invalid token expiry configuration');
         }
+       
         if (user.firstName && user.lastName) {
           token.name = user.firstName + " " + user.lastName;
         }
@@ -81,6 +83,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     async session({ session, token }) {
+     
       session.user.name = token.name;
 
       if (typeof token.accessToken === 'string') {

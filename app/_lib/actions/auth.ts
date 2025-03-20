@@ -1,7 +1,13 @@
 "use server"
-import { signIn ,signOut } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { z } from "zod";
 import { AuthError } from "next-auth";
+import { axiosInstance } from "@/app/_services/axiosServices";
+import { baseUrl } from "@/app/_services/envService";
+import { tokenProvider } from "@/app/_services/tokenService";
+import { RegisterUserSchema } from "@/definitions/schema-defnitions/auth";
+import { UserRegisterState } from "@/definitions/type-definitions/auth";
+import { redirect } from "next/navigation";
 
 
 //authenticate
@@ -10,7 +16,7 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    await signIn('credentials', formData);  
+    await signIn('credentials', formData);
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -24,35 +30,56 @@ export async function authenticate(
   }
 }
 
-export const logOut = async () => {  
+export const logOut = async () => {
   await signOut();
 };
 
-//change password state
-export type ChangePasswordState = {
-  success?: string | null;
-  submitError?: string | null;
-  errors?: {
-    oldPassword?: string[];
-    newPassword?: string[];
-    confirmPassword?: string[];
-  }
-}
-//change password form schema
-const ChangePasswordSchema = z.object({
-  oldPassword: z.string().min(8, { message: 'Old password must be at least 8 characters long' }),
-  newPassword: z.string().min(8, { message: 'New password must be at least 8 characters long' }),
-  confirmPassword: z.string().min(8, { message: 'Confirm password must be at least 8 characters long' }),
-}).refine(data => data.newPassword === data.confirmPassword, {
-  message: 'Confirm password must match new password',
-  path: ['confirmPassword'], // Optional: Highlights the specific field causing the issue
-});
-
-
 //Register user
-export async function registerUser(){
+export async function registerUser(
+  prevState: UserRegisterState,
+  formData: FormData
+)
+  : Promise<UserRegisterState> {
+  const { accessToken } = await tokenProvider();
+  const validatedFields=RegisterUserSchema.safeParse({
+    firstName:formData.get("firstName"),
+    lastName:formData.get("lastName"),
+    email:formData.get("email"),
+    phoneNumber:formData.get("phoneNumber"),
+    address:formData.get("address"),
+    profilePicture:formData.get("profilePicture") as File,
   
+  })
+if(!validatedFields.success){
+  return {
+    errors:validatedFields.error.flatten().fieldErrors,
+    submitError:"Invalid element, please make sure all are valid"
+  }
+}   
+  try {
+    const response = await axiosInstance.post(`${baseUrl}/Users/Create`, formData, {
+      headers: {       
+        "Content-Type": "multipart/form-data"
+      }
+    })    
+    return {
+      success:response.data.message??"User Registred Successfully!"
+    }
+  }
+  catch (e:any) {
+    if (e?.response?.status === 401) {
+      redirect("/ok/401");
 }
+return {
+success: null,
+submitError: `${e?.response?.data?.errors[0].message??"Error occured while registering user!"}`
+};
+  }
+
+
+}
+
+
 
 //change password action
 // export async function changePassword(prevState: ChangePasswordState, formData: FormData): Promise<ChangePasswordState> {

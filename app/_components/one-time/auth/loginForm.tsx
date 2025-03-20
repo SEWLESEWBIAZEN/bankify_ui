@@ -21,7 +21,7 @@ export default function LoginForm() {
         <div className="min-h-screen flex flex-col items-center justify-center  py-6 px-4">
           <div className="max-w-md w-full">
             <div className="p-8 rounded-2xl bg-transparent border-primary text-primary dark:text-primary-foreground">
-              <h2 className=" text-center text-lg font-bold font-lobster">Bankify Login</h2>
+              <h2 className=" text-center text-lg font-bold font-lobster">Login | Bankify</h2>
               <div className="mt-8 space-y-4">
                 <div>
                   <label className="  mb-2 block text-sm font-semibold ">User name</label>
@@ -70,7 +70,7 @@ export default function LoginForm() {
                   </div>
                 </div>
                 <div className="!mt-8 flex flex-row justify-between gap-6">
-                  <button disabled={isPending} className=" py-2 px-6 text-sm tracking-wide rounded-none text-white bg-primary hover:bg-stone-500 cursor-pointer focus:outline-none items-center">
+                  <button disabled={isPending} className="text-nowrap py-2 px-6 text-sm tracking-wide rounded-none text-white bg-primary hover:bg-stone-500 cursor-pointer focus:outline-none items-center">
                     {isPending ? "Signing" : "Sign In"} {isPending ? <ThreeDot size='small' color="white" /> : ""}
                   </button>
                   <button onClick={() => setLogin(false)} className='w-full/3 font-semibold cursor-pointer hover:bg-slate-100 px-6 rounded-none -py-1 dark:hover:bg-slate-900  hover:bg-slate-100'>Cancel</button>

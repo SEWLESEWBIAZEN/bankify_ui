@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Provider from "./_components/Provider";
 import { tokenProvider } from "./_services/tokenService";
 import Head from "next/head";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,7 @@ export default async function RootLayout({
 
   try {
     const tokenData = await tokenProvider();
-    fullName = tokenData.firstName + " " + tokenData.lastName;
+    fullName = tokenData.firstName + " " + tokenData.lastName;   
     expiry = tokenData.expiry;
     claims = tokenData.claims;
   } catch (error) {
@@ -55,6 +56,7 @@ export default async function RootLayout({
         >
           <Provider claims={claims} name={fullName} expiry={expiry??''}>
             {children}
+            <Toaster/>
           </Provider>
         </ThemeProvider>
       </body>

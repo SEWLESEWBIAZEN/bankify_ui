@@ -37,12 +37,7 @@ async function getUser(username: string, password: string): Promise<User | undef
     );
     return response.data; // Ensure 'User' type consistency
   } catch (error: any) {
-    console.error('Authentication error:', error?.message || error);
-
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      throw new Error('Invalid credentials.');
-    }
-    throw new Error('Failed to authenticate user. Please try again.');
+    
   }
 }
 

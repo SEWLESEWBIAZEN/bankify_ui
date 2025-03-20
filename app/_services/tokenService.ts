@@ -7,7 +7,7 @@ export async function tokenProvider() {
         const {  accessToken = '', expiry = '', email = '', firstName = '', lastName ='', claims = '' } = session?.user || {};
         return { accessToken, expiry, email, firstName, lastName, claims };
     } catch (error) {
-        return { accessToken: '', idToken: '',expiry : '', email: '', firstName: '', lastName : '', claims: '' };
+        return { accessToken: '',expiry : '', email: '', firstName: '', lastName : '', claims: '' };
     }
 }
 

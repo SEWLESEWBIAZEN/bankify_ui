@@ -2,6 +2,7 @@
 import { axiosInstance } from "@/app/_services/axiosServices";
 import { baseUrl } from "@/app/_services/envService";
 import { tokenProvider } from "@/app/_services/tokenService";
+import { redirect } from "next/navigation";
 export async function getAllUsers() {
     const {accessToken}=await tokenProvider();
     try {
@@ -13,7 +14,10 @@ export async function getAllUsers() {
         });
         return response?.data;
     } catch (error: any) {
-        console.error("Error fetching users:", error?.response?.data || error?.message);
+        if (error?.response?.status === 401 || error?.response?.status ===403 ) {
+            redirect("/ok/401");
+      }
+        console.error("Error fetching users:", error?.response.status || error?.message);
         return { success: false, message: "Failed to fetch users" };
     }
 }
