@@ -40,7 +40,7 @@ export default async function RootLayout({
         >
           <Provider claims={claims} name={fullName} expiry={expiry??''}>
             {children}
-            <Toaster/>
+            <Toaster position="top-right" richColors/>
           </Provider>
         </ThemeProvider>
       </body>

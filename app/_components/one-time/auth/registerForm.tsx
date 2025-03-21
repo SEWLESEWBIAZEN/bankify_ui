@@ -1,5 +1,5 @@
 'use client';
-import { registerUser } from '@/app/_lib/actions/auth';
+import { registerUser, updateUser } from '@/app/_lib/actions/auth';
 import {  ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import React, { useActionState, useEffect, useState } from 'react';
@@ -10,8 +10,11 @@ import { ThreeDot } from 'react-loading-indicators';
 import ProfilePictureForm from './registerFormSteps/ProfilePictureForm';
 import { UserRegisterFormData, UserRegisterState } from '@/definitions/type-definitions/auth';
 import { toast } from 'sonner';
+import { redirect } from 'next/navigation';
 
 const RegisterForm = ({user,edit}:{user?:any,edit?:boolean}) => {
+
+    //this form is used as user form for both update and regiter
      //form state
      const [formData, setFormData] = useState<UserRegisterFormData>({
         firstName:user?.firstName?? '',
@@ -24,12 +27,13 @@ const RegisterForm = ({user,edit}:{user?:any,edit?:boolean}) => {
     const [profilePicture, setProfilePicture] = useState<File | null>(null)
     const [currentStep, setCurrentStep] = useState(1);
     const initialState:UserRegisterState={errors:{},success:null, submitError:null}
-    const [state, formAction, isPending] = useActionState(registerUser, initialState);
+    const serverAction=edit? updateUser:registerUser;
+    const [state, formAction, isPending] = useActionState(serverAction, initialState);
     
     //steps in the registration(forms)
     const steps = [
-        { component: <NameForm key="name" formData={formData} setFormData={setFormData}  state={state} />, title: "Add first name and last name." },
-        { component: <AddressForm key="address" formData={formData} setFormData={setFormData}  state={state} />, title: "Add email, phone number and physical address" },
+        { component: <NameForm key="name" formData={formData} setFormData={setFormData}  state={state} />, title: "First name and last name." },
+        { component: <AddressForm key="address" formData={formData} setFormData={setFormData}  state={state} />, title: "Email, phone number and physical address" },
         { component: <ProfilePictureForm key="profilePicture"  setProfilePicture={setProfilePicture} state={state} />, title: "Profile Picture, and Finish" }
     ];
 
@@ -47,6 +51,7 @@ const RegisterForm = ({user,edit}:{user?:any,edit?:boolean}) => {
 
     //preparing a formdata to be sent 
     const formdata:FormData=new FormData();
+    edit && formdata.append("id",user.id);
     formdata.append("firstName",formData.firstName);
     formdata.append("lastName",formData.lastName);
     formdata.append("email",formData.email);
@@ -56,7 +61,8 @@ const RegisterForm = ({user,edit}:{user?:any,edit?:boolean}) => {
 
     useEffect(()=>{
         if(state.success){
-            toast.success(state.success??"Registered!")
+            toast.success(state.success?? edit ? "Updated":"Registered!")
+            edit? redirect("/ok/users"):""
         }
         if(state.submitError){
             toast.error(state.submitError??"Error occured")
@@ -77,9 +83,11 @@ const RegisterForm = ({user,edit}:{user?:any,edit?:boolean}) => {
                                 </div>
                                 <div className=" flex justify-end items-start ">
                                     {currentStep === steps.length &&
-                                        <button disabled={isPending} className=" py-1 px-4 text-sm  rounded-none text-white bg-primary hover:bg-stone-500 cursor-pointer focus:outline-none items-center">
-                                            {isPending ? "Registering" : "Register"} {isPending ? <ThreeDot size='small' color="white" /> : ""}
-                                        </button>}                                    
+                                        <button disabled={isPending}  type='submit'
+                                        className=" py-1 px-4 text-sm  rounded-none text-white bg-primary hover:bg-stone-500 cursor-pointer focus:outline-none items-center">
+                                            {isPending ? edit ? "Updating" :"Registering" : edit?"Update": "Register"} {isPending ? <ThreeDot size='small' color="white" /> : ""}
+                                        </button>
+                                    }                                    
                                 </div>
                             </div>
                             {steps[currentStep - 1].component}

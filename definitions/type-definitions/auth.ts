@@ -30,5 +30,20 @@ export type UserRegisterState = {
     phoneNumber: string;
     address: string;
 };
+
+export type Role={
+  id:number;
+  roleName:string;
+  roleClaims:any[]
+}
+
+export type UpdateUserRoleState={
+  success?:string | null;
+  submitError?:string | null;
+  errors?:{
+    userId?:string[];
+    roleIds?:string[];
+  }
+}
   
   

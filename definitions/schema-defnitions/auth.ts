@@ -1,5 +1,5 @@
 import { phoneRegex } from "@/lib/utils";
-import { z } from "zod";
+import { number, z } from "zod";
 
 //change password form schema
 export const ChangePasswordSchema = z.object({
@@ -11,7 +11,7 @@ export const ChangePasswordSchema = z.object({
     path: ['confirmPassword'], // Optional: Highlights the specific field causing the issue
   });
 
-  export const RegisterUserSchema=z.object({
+  export const RegisterUserSchema=z.object({    
     firstName:z.string().min(1,{message:"First Name is Required."}),
     lastName:z.string().min(1,{message:"Last Name is Required."}),
     email:z.string().min(1,{message:"Email is Required."}).email({message:"Inavlid Email."}),
@@ -29,3 +29,9 @@ export const ChangePasswordSchema = z.object({
       message: "Only PNG, JPEG, and JPG files are allowed.",
     }).nullable()
   });
+
+
+  export const UpdateUserRoleSchema = z.object({
+    userId: z.number(),
+    roleIds: z.array(z.number()),
+});
