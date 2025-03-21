@@ -1,5 +1,3 @@
-
-
 import RegisterForm from "@/app/_components/one-time/auth/registerForm";
 import { Metadata } from "next";
 

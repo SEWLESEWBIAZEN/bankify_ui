@@ -1,4 +1,4 @@
-import PageNavBar from '@/app/_components/reusable/PageNavBar';
+
 import { ModeToggle } from '@/components/theme-togle';
 import Image from 'next/image';
 import Link from 'next/link'; // Import Link for navigation

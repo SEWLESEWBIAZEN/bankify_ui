@@ -14,18 +14,18 @@ export const ChangePasswordSchema = z.object({
   export const RegisterUserSchema=z.object({
     firstName:z.string().min(1,{message:"First Name is Required."}),
     lastName:z.string().min(1,{message:"Last Name is Required."}),
-    email:z.string().min(1,{message:"Email is Required."}).email(),
-    phoneNumber:z.string().min(9,{message:"Phone Number is Required."}).regex(phoneRegex,{message:"It should be valid phone number"}),
+    email:z.string().min(1,{message:"Email is Required."}).email({message:"Inavlid Email."}),
+    phoneNumber:z.string().min(9,{message:"Phone Number is Required."}).regex(phoneRegex,{message:"It should be valid phone number."}),
     address:z.string().nullable(),
     profilePicture :z
     .instanceof(File)    
     .refine((file) => file.size <= 5 * 1024 * 1024, {
-      message: "File size must be less than 5MB",
+      message: "File size must be less than 5MB.",
     })
     .refine((file) => file.type.startsWith("image/"), {
-      message: "Only image files are allowed",
+      message: "Only image files are allowed.",
     })
     .refine((file) => /\.(png|jpeg|jpg)$/i.test(file.name), {
-      message: "Only PNG, JPEG, and JPG files are allowed",
+      message: "Only PNG, JPEG, and JPG files are allowed.",
     }).nullable()
   });

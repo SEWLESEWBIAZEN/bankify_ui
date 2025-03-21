@@ -21,3 +21,22 @@ export async function getAllUsers() {
         return { success: false, message: "Failed to fetch users" };
     }
 }
+
+export async function getUserByid(id:number){
+    const {accessToken}=await tokenProvider();
+    try {
+        const response = await axiosInstance.get(`${baseUrl}/Users/GetById?Id=${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`
+            }
+        });
+        return response?.data;
+    } catch (error: any) {
+        if (error?.response?.status === 401 || error?.response?.status ===403 ) {
+            redirect("/ok/401");
+      }
+        console.error("Error fetching user:", error?.response.status || error?.message);
+        return { success: false, message: "Failed to fetch user" };
+    }
+}

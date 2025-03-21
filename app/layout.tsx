@@ -1,26 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Lexend } from "next/font/google";
 import "./globals.css";
+import "./styles.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Provider from "./_components/Provider";
 import { tokenProvider } from "./_services/tokenService";
-import Head from "next/head";
 import { Toaster } from "@/components/ui/sonner";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const lexend = Lexend({
-  subsets: ["latin"],
-  variable: "--font-lexend",
-});
 
 export const metadata: Metadata = {
   title: "Bankify",
@@ -47,7 +31,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>   
-      <body className={lexend.className}>
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

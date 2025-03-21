@@ -17,7 +17,7 @@ const ProfilePictureForm = ({
     return (
         <div className="mt-8 space-y-4">
             <div>
-                <label className="  mb-2 block text-sm font-semibold ">Profile Picture</label>
+                <label className="  mb-2 block text-sm font-semibold">Profile Picture</label>
                 <div className="relative flex items-center">
                     <input
                         className="w-full text-sm bg-slate-100 dark:bg-primary focus:bg-transparent active:bg-transparent rounded-none px-4 py-3 truncate cursor-pointer"

@@ -3,7 +3,7 @@ import { CircleUserRound } from 'lucide-react'
 import { UserRegisterFormData, UserRegisterState } from '@/definitions/type-definitions/auth'
 import UserFormInput from '@/app/_components/reusable/ui/UserFormInput'
 
-const NameForm = ({ formData, setFormData, state }: { formData: UserRegisterFormData, setFormData: any, state: UserRegisterState }) => {
+const NameForm = ({ formData, setFormData, state,edit }: { formData: UserRegisterFormData, setFormData: any, state: UserRegisterState,edit?:boolean }) => {
     return (
         <div className="mt-8 space-y-4">
             <UserFormInput
@@ -19,7 +19,7 @@ const NameForm = ({ formData, setFormData, state }: { formData: UserRegisterForm
                 changeFunc={(e) => setFormData((prev: UserRegisterFormData) => ({ ...prev, [e.target.name]: e.target.value }))}
                 state={state}
                 Icon={CircleUserRound}
-                label='last Name'
+                label='Last Name'
                 name='lastName'
             />
         </div>

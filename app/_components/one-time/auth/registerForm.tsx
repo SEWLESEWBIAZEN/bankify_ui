@@ -1,6 +1,6 @@
 'use client';
 import { registerUser } from '@/app/_lib/actions/auth';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {  ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import React, { useActionState, useEffect, useState } from 'react';
 import NameForm from './registerFormSteps/NameForm';
@@ -11,16 +11,15 @@ import ProfilePictureForm from './registerFormSteps/ProfilePictureForm';
 import { UserRegisterFormData, UserRegisterState } from '@/definitions/type-definitions/auth';
 import { toast } from 'sonner';
 
-const RegisterForm = () => {
-    //form state
-    const [formData, setFormData] = useState<UserRegisterFormData>({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        address: '',
-    });
-
+const RegisterForm = ({user,edit}:{user?:any,edit?:boolean}) => {
+     //form state
+     const [formData, setFormData] = useState<UserRegisterFormData>({
+        firstName:user?.firstName?? '',
+        lastName: user?.lastName??'',
+        email: user?.email??'',
+        phoneNumber:user?.phoneNumber?? '',
+        address: user?.address??'',
+    });   
     //states
     const [profilePicture, setProfilePicture] = useState<File | null>(null)
     const [currentStep, setCurrentStep] = useState(1);
@@ -29,9 +28,9 @@ const RegisterForm = () => {
     
     //steps in the registration(forms)
     const steps = [
-        { component: <NameForm key="name" formData={formData} setFormData={setFormData}  state={state}/>, title: "Add first name and last name." },
-        { component: <AddressForm key="address" formData={formData} setFormData={setFormData}  state={state}/>, title: "Add email, phone number and physical address" },
-        { component: <ProfilePictureForm  setProfilePicture={setProfilePicture} state={state}/>, title: "Profile Picture, and Finish" }
+        { component: <NameForm key="name" formData={formData} setFormData={setFormData}  state={state} />, title: "Add first name and last name." },
+        { component: <AddressForm key="address" formData={formData} setFormData={setFormData}  state={state} />, title: "Add email, phone number and physical address" },
+        { component: <ProfilePictureForm key="profilePicture"  setProfilePicture={setProfilePicture} state={state} />, title: "Profile Picture, and Finish" }
     ];
 
     //onclick handlers for back and forth buttons in refgistration steps
@@ -73,7 +72,7 @@ const RegisterForm = () => {
                         <div className="p-8 rounded-2xl bg-transparent border-primary text-primary dark:text-primary-foreground">
                             <div className='w-full flex flex-row items-center justify-between '>
                                 <div>
-                                    <h2 className="text-lg font-bold">Register | Bankify</h2>
+                                    <h2 className="text-lg font-bold">{edit?"Update":"Register"} User | Bankify</h2>
                                     <div className='font-normal text-stone-500 text-[12px]'>{steps[currentStep - 1].title}</div>
                                 </div>
                                 <div className=" flex justify-end items-start ">
@@ -105,12 +104,12 @@ const RegisterForm = () => {
                         </div>
                     </div>
 
-                    <span className="w-full px-8 flex flex-row gap-2 items-start justify-start text-start">
+                   {!edit&& <span className="w-full px-8 flex flex-row gap-2 items-start justify-start text-start">
                         Already have an account?{' '}
                         <Link href="/auth/login" className="text-primary font-semibold">
                             Login
                         </Link>
-                    </span>
+                    </span>}
                 </div>
             </form>
         </div>

@@ -8,6 +8,7 @@ import { tokenProvider } from "@/app/_services/tokenService";
 import { RegisterUserSchema } from "@/definitions/schema-defnitions/auth";
 import { UserRegisterState } from "@/definitions/type-definitions/auth";
 import { redirect } from "next/navigation";
+import { error } from "console";
 
 
 //authenticate
@@ -40,43 +41,40 @@ export async function registerUser(
   formData: FormData
 )
   : Promise<UserRegisterState> {
-  const { accessToken } = await tokenProvider();
-  const validatedFields=RegisterUserSchema.safeParse({
-    firstName:formData.get("firstName"),
-    lastName:formData.get("lastName"),
-    email:formData.get("email"),
-    phoneNumber:formData.get("phoneNumber"),
-    address:formData.get("address"),
-    profilePicture:formData.get("profilePicture") as File,
-  
+
+  const returnState: UserRegisterState = { errors: {}, success: null, submitError: null };
+  const validatedFields = RegisterUserSchema.safeParse({
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    email: formData.get("email"),
+    phoneNumber: formData.get("phoneNumber"),
+    address: formData.get("address"),
+    profilePicture: formData.get("profilePicture") as File,
   })
-if(!validatedFields.success){
-  return {
-    errors:validatedFields.error.flatten().fieldErrors,
-    submitError:"Invalid element, please make sure all are valid"
+
+  if (!validatedFields.success) {
+    returnState.errors = validatedFields.error.flatten().fieldErrors;
+    returnState.submitError = "Invalid element, please make sure all are valid";
   }
-}   
+
   try {
     const response = await axiosInstance.post(`${baseUrl}/Users/Create`, formData, {
-      headers: {       
+      headers: {
         "Content-Type": "multipart/form-data"
       }
-    })    
-    return {
-      success:response.data.message??"User Registred Successfully!"
-    }
+    })
+    returnState.success = response.data.message ?? "User Registred Successfully!";
   }
-  catch (e:any) {
+
+  catch (e: any) {
     if (e?.response?.status === 401) {
       redirect("/ok/401");
-}
-return {
-success: null,
-submitError: `${e?.response?.data?.errors[0].message??"Error occured while registering user!"}`
-};
+    }
+    console.log()
+    returnState.submitError = `${e?.response?.status} ${e?.response?.statusText}, ${e.response.data.errors[0] ?? "Error occured while registering user!"}`;
   }
 
-
+  return returnState;
 }
 
 

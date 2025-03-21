@@ -1,0 +1,13 @@
+body {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 100; /* Default weight */
+}
+
+/* Example of using different weights */
+h1 {
+  font-weight: 900; /* Black weight */
+}
+
+strong {
+  font-weight: 700; /* Bold weight */
+}

@@ -23,6 +23,9 @@ interface centralStore {
     redirectionUrl:string |null;
     setRedirectionUrl:(url:string | null)=>void;
 
+    selectedTableIds:number[] | null;
+    setSelectedTableIds:(ids:number[] | null)=>void;
+
 }
 
 export const useCentralStore = create<centralStore>((set, get) => ({
@@ -50,6 +53,9 @@ export const useCentralStore = create<centralStore>((set, get) => ({
     setFullName: (name) => set({ fullName: name }),
 
     redirectionUrl:null,
-    setRedirectionUrl:(url:string | null)=>set({redirectionUrl:url})
+    setRedirectionUrl:(url:string | null)=>set({redirectionUrl:url}),
+
+    selectedTableIds:null,
+    setSelectedTableIds:(ids:number[] | null)=>set({selectedTableIds:ids})
 
 }))

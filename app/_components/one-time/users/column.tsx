@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { getInitials } from "@/app/_lib/utils";
+import UserTableRowAction from "./UserTableRowAction";
 
 const columns: ColumnDef<User, any>[] = [
   {
@@ -37,13 +38,20 @@ const columns: ColumnDef<User, any>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  {    
+      accessorKey: "id",
+      header: "",
+      cell: () => <span></span>, 
+   
+    
+  },
   {
     accessorKey: "profilePicture",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="" />
     ),
     cell: ({ row }) => {
-      const profilePicture = row.getValue("profilePicture");
+      const profilePicture = row.getValue("profilePicture");    
       return (
         <Link href={``} className="flex flex-1 justify-start">
           <Avatar>
@@ -67,40 +75,51 @@ const columns: ColumnDef<User, any>[] = [
       <DataTableColumnHeader column={column} title="First Name" />
     ),
     cell: ({ row }) => {
-      return(<div>{row.getValue("firstName")}</div>)
-    }} ,
+      return (<div>{row.getValue("firstName")}</div>)
+    }
+  },
   {
     accessorKey: "lastName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Last Name" />
     ),
     cell: ({ row }) => {
-      return(<div>{row.getValue("lastName")}</div>)
-    }} ,
+      return (<div>{row.getValue("lastName")}</div>)
+    }
+  },
   {
     accessorKey: "email",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Email Address" />
     ),
     cell: ({ row }) => {
-      return(<div>{row.getValue("email")}</div>)
-    }} ,
+      return (<div>{row.getValue("email")}</div>)
+    }
+  },
   {
     accessorKey: "phoneNumber",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Phone Number" />
     ),
     cell: ({ row }) => {
-      return(<div>{row.getValue("phoneNumber")}</div>)
-    }} ,
+      return (<div>{row.getValue("phoneNumber")}</div>)
+    }
+  },
   {
     accessorKey: "address",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Address" />
     ),
     cell: ({ row }) => {
-      return(<div className="text-ellipsis">{row.getValue("address")}</div>)
-    }} ,
+      return (<div className="text-ellipsis">{row.getValue("address")}</div>)
+    }
+  },
+  {
+    id:"actions",
+    cell:({row})=>{
+      return(<UserTableRowAction id={parseInt(row.getValue("id"))}/>)
+    }
+  }
 ];
 
 export default columns;

@@ -1,3 +1,36 @@
+@font-face {
+  font-family: 'Lexend';
+  src: url('/fonts/Lexend-Black.ttf') format('truetype');
+  font-weight: 900; /* Black weight */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lexend';
+  src: url('/fonts/Lexend-Bold.ttf') format('truetype');
+  font-weight: 700; /* Bold weight */
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend';
+  src: url('/fonts/Lexend-Light.ttf') format('truetype');
+  font-weight: 200; /* Bold weight */
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend';
+  src: url('/fonts/Lexend-Regular.ttf') format('truetype');
+  font-weight: 200; /* Bold weight */
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
@@ -132,9 +165,4 @@
   }
 }
 
-.lexend {
-  font-family: "Lexend", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 2;
-  font-style: normal;
-}
+
