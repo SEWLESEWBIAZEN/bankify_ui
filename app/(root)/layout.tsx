@@ -4,8 +4,7 @@ import Sidebar from "../_components/one-time/common/Sidebar";
 import { useCentralStore } from "../CenteralStore";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {  
-    const {isSidebarOpen,setIsSidebarOpen}=useCentralStore();
-  
+    const {isSidebarOpen,setIsSidebarOpen}=useCentralStore();  
     return (
         <>           
             <div

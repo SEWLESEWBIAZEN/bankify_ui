@@ -63,7 +63,7 @@ const ManageRoles = ({ id }: { id: number }) => {
     useEffect(() => {
         if (state.success) {
             toast.success(state.success ?? "User Role Updated!");
-            redirect("/ok/users");
+            redirect("/ok/account-managt/users");
         }
         if (state.submitError) {
             toast.error(state.submitError ?? "Error Occurred!");

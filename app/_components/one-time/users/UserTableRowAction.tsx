@@ -17,7 +17,7 @@ const UserTableRowAction = ({ id }: { id: number }) => {
           View
         </DropdownMenuItem>
         <DropdownMenuItem className='cursor-pointer'>
-          <Link href={`/ok/users/edit/${id}`}>
+          <Link href={`/ok/account-managt/users/edit/${id}`}>
             Update
           </Link>
         </DropdownMenuItem>

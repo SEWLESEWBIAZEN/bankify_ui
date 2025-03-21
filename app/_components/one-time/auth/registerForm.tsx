@@ -62,7 +62,7 @@ const RegisterForm = ({user,edit}:{user?:any,edit?:boolean}) => {
     useEffect(()=>{
         if(state.success){
             toast.success(state.success?? edit ? "Updated":"Registered!")
-            edit? redirect("/ok/users"):""
+            edit? redirect("/ok/account-managt/users"):""
         }
         if(state.submitError){
             toast.error(state.submitError??"Error occured")

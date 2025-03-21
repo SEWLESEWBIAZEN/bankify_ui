@@ -1,12 +1,17 @@
 "use client";
 import React from "react";
-import { ChartSpline, Users } from "lucide-react";
+import { ChartSpline, Settings2Icon, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const Navlinks = () => {
     const pathname = usePathname();
     const links = [
+        {
+            label: "Account Management",
+            to: "/ok/account-managt",
+            icon: Settings2Icon,
+        },
         {
             label: "Dashboard",
             to: "/ok/dashboard",
