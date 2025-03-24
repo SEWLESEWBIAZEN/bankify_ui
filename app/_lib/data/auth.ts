@@ -44,5 +44,44 @@ export async function getUserRoles(userId:number) {
     }
 }
 
+export async function getAllClaims() {
+    const { accessToken } = await tokenProvider();
+    try {
+        const response = await axiosInstance.get(`${baseUrl}/AppClaim/GetAll`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`
+            }
+        });
+        return response?.data;
+    } catch (error: any) {
+        if (error?.response?.status === 401 || error?.response?.status === 403) {
+            redirect("/ok/401");
+        }
+        console.error("Error fetching claims:", error?.response.status || error?.message);
+        return { success: false, message: "Failed to fetch claims" };
+    }
+}
+export async function getRoleClaims(roleId:number) {
+
+    const { accessToken } = await tokenProvider();
+    try {
+        const response = await axiosInstance.get(`${baseUrl}/AppClaim/GetClaimsByRole?roleId=${roleId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${accessToken}`
+            }
+        });
+   
+        return response?.data;
+    } catch (error: any) {
+        if (error?.response?.status === 401 || error?.response?.status === 403) {
+            redirect("/ok/401");
+        }
+        console.error("Error fetching role claims:", error?.response.status || error?.message);
+        return { success: false, message: "Failed to fetch role claims" };
+    }
+}
+
 
 

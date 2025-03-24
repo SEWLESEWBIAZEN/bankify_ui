@@ -1,5 +1,5 @@
 import { phoneRegex } from "@/lib/utils";
-import { number, z } from "zod";
+import { z } from "zod";
 
 //change password form schema
 export const ChangePasswordSchema = z.object({
@@ -34,4 +34,10 @@ export const ChangePasswordSchema = z.object({
   export const UpdateUserRoleSchema = z.object({
     userId: z.number(),
     roleIds: z.array(z.number()),
+});
+
+
+  export const UpdateRoleClaimSchema = z.object({
+    appRoleId: z.number(),
+    appClaimsId: z.array(z.number()),
 });

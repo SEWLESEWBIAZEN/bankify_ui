@@ -5,8 +5,8 @@ import { AuthError } from "next-auth";
 import { axiosInstance } from "@/app/_services/axiosServices";
 import { baseUrl } from "@/app/_services/envService";
 import { tokenProvider } from "@/app/_services/tokenService";
-import { RegisterUserSchema, UpdateUserRoleSchema } from "@/definitions/schema-defnitions/auth";
-import { UpdateUserRoleState, UserRegisterState } from "@/definitions/type-definitions/auth";
+import { RegisterUserSchema, UpdateRoleClaimSchema, UpdateUserRoleSchema } from "@/definitions/schema-defnitions/auth";
+import { UpdateRoleClaimState, UpdateUserRoleState, UserRegisterState } from "@/definitions/type-definitions/auth";
 import { redirect } from "next/navigation";
 import { error } from "console";
 
@@ -41,7 +41,6 @@ export async function registerUser(
   formData: FormData
 )
   : Promise<UserRegisterState> {
-
   const returnState: UserRegisterState = { errors: {}, success: null, submitError: null };
   const validatedFields = RegisterUserSchema.safeParse({
     firstName: formData.get("firstName"),
@@ -133,17 +132,17 @@ export async function updateUserRoles(prevState: UpdateUserRoleState, formData: 
     }
   }
   const body = validatedFields.data;
-
+ 
   try {
     const response = await axiosInstance.post(`${baseUrl}/Users/AddRoleToUser`, body, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
     })
+   
     return {
       success: `${response.data.message ?? "User Role Updated!"}`
     }
-
   }
   catch (e: any) {
     if (e?.response?.status === 401) {
@@ -154,6 +153,42 @@ export async function updateUserRoles(prevState: UpdateUserRoleState, formData: 
     };
   }
 
+}
+
+export async function updateRoleClaims(prevState:UpdateRoleClaimState,formData:FormData): Promise<UpdateRoleClaimState>{
+ 
+  const { accessToken } = await tokenProvider();
+  const validatedFields = UpdateRoleClaimSchema.safeParse({
+    appRoleId: parseInt(formData.get('roleId') as string, 10),
+    appClaimsId: formData.getAll('claimIds').map((claimId) => parseInt(claimId as string, 10)),
+  });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      submitError: "Invalid data sent!"
+    }
+  }
+  const body = validatedFields.data;
+  
+  try {
+    const response = await axiosInstance.put(`${baseUrl}/AppRole/GrantPrivilege`, body, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    return {
+      success: `${response.data.message ?? "Role Claim Updated!"}`
+    }
+  }
+  catch (e: any) {
+    if (e?.response?.status === 401) {
+      redirect("/ok/401");
+    }
+    return {
+      submitError: `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating role claim!"}`
+    };
+  }
+  
 }
 
 

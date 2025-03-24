@@ -30,11 +30,15 @@ export type UserRegisterState = {
     phoneNumber: string;
     address: string;
 };
+export type Claim={
+  id:number;
+  claimString:string;
+}
 
 export type Role={
   id:number;
   roleName:string;
-  roleClaims:any[]
+  roleClaims:Claim[]
 }
 
 export type UpdateUserRoleState={
@@ -45,5 +49,16 @@ export type UpdateUserRoleState={
     roleIds?:string[];
   }
 }
+export type UpdateRoleClaimState={
+  success?:string | null;
+  submitError?:string | null;
+  errors?:{
+    appRoleId?:string[];
+    appClaimsId?:string[];
+  }
+}
+
+
+
   
   

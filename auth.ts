@@ -37,18 +37,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             password: z.string().min(6),
           })
           .safeParse(credentials);
-        if (!parsedCredentials.success) {
-          return null;
-        }
-        const { username, password } = parsedCredentials.data;
-        try {
-          const user: User = await getUser(username, password);
-          if (!user) {
-            throw new Error('Invalid username or password');
+        if (parsedCredentials.success) {
+          const { username, password } = parsedCredentials.data;
+          try {
+            const user: User = await getUser(username, password);
+          
+            return user || null;
+          } catch (error) {
+            console.error('Authentication error:', error);
+            return null;
           }
-          return user;
-        } catch (error) {
-          console.error('Authentication error:', error);
+        } else {
           return null;
         }
       },
@@ -63,13 +62,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return baseUrl;
     },
     async jwt({ token, user }) {
-      
+
       if (user) {
         const expiryInHours = Number(process.env.TOKEN_EXPIRY) || 4;
         if (isNaN(expiryInHours)) {
-          throw new Error('Invalid token expiry configuration');
+         console.error('Invalid token expiry configuration');
         }
-       
+
         if (user.firstName && user.lastName) {
           token.name = user.firstName + " " + user.lastName;
         }
@@ -83,7 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     async session({ session, token }) {
-     
+
       session.user.name = token.name;
       if (typeof token.accessToken === 'string') {
         session.user.accessToken = token.accessToken;

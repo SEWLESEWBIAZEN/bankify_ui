@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 
 const ManageRoles = ({ id }: { id: number }) => {
     // const [previousRoles, setPreviousRoles] = useState<Role[]>([]);
-    const [roles, setRoles] = useState<Role[]>();
+     const [roles, setRoles] = useState<Role[]>();
     const [userRoles, setUserRoles] = useState<number[]>([]);
 
     const initialState: UpdateUserRoleState = { errors: {}, success: null, submitError: null };
