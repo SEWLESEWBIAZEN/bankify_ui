@@ -12,7 +12,7 @@ const TopNavbar = ({navbarItems}:{navbarItems:TopNavbarProps[]}) => {
     {navbarItems.map(({ name, icon: Icon, to }) => (
       <Link key={name} href={to} className="flex items-center gap-2 hover:text-primary transition">
         <Icon size={18} className="text-slate-700 dark:text-slate-100" />
-        <span className="text-sm font-medium">{name}</span>
+        <span className="text-sm font-medium">{name} </span>
       </Link>
     ))}
   </div>
