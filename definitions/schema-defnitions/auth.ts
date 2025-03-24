@@ -41,3 +41,9 @@ export const ChangePasswordSchema = z.object({
     appRoleId: z.number(),
     appClaimsId: z.array(z.number()),
 });
+
+
+  export const AddNewRoleSchema = z.object({
+    appRoleName: z.string(),
+  
+});

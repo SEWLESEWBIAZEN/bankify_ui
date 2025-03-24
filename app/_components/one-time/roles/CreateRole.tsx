@@ -1,0 +1,63 @@
+'use client'
+import { addNewRole } from '@/app/_lib/actions/auth'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { AddNewRoleState } from '@/definitions/type-definitions/auth'
+import { error } from 'console'
+import { Plus } from 'lucide-react'
+import { redirect } from 'next/navigation'
+import React, { useActionState, useEffect } from 'react'
+import { toast } from 'sonner'
+
+const CreateRole = () => {
+    const initialState: AddNewRoleState = { errors: {}, success: null, submitError: null }
+    const [state, createAction, isPending] = useActionState(addNewRole, initialState);
+
+    useEffect(() => {
+        if (state.success) {
+            toast.success(state.success ?? "New Role Added!");
+            redirect("/ok/account-managt/roles")
+        }
+        if (state.submitError) {
+            toast.error(state.submitError ?? "Error Occured.");
+        }
+    }, [state])
+    return (
+        <Dialog>
+            <DialogTrigger asChild>
+                <div className=' flex flex-row gap-1 items-end mb-4 py-2 px-4 rounded-md hover:bg-primary-foreground hover:text-stone-600 dark:hover:text-stone-200 dark:hover:bg-primary  cursor-pointer'>
+                    <span className='hidden sm:block'>New Role</span>
+                    <Plus className='' />
+                </div>
+            </DialogTrigger>
+            <DialogContent>
+                <form action={createAction}>
+                    <DialogTitle>
+                        New Role
+                    </DialogTitle>
+                    <DialogDescription>
+                        Give it a name and click on Add button
+                    </DialogDescription>
+                    <div className='flex flex-col justify-start my-6 w-full'>
+                    <Label htmlFor='rolename' id='rolenamelabel' >Name</Label>
+                    <Input name='rolename' id='rolename' placeholder='enter role name....' className='w-full mt-1' />
+                    {
+                        state?.errors && state.errors.appRoleName &&
+                        <span>
+                            {state?.errors?.appRoleName?.map((error: string) => <li key={error}>{error}</li>)}
+                        </span>
+                    }
+                    </div>
+                    <DialogFooter className='flex justify-end items-end'>
+                        <Button disabled={isPending} type='submit' className='cursor-pointer'>
+                            Add
+                        </Button>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
+        </Dialog>
+    )
+}
+export default CreateRole

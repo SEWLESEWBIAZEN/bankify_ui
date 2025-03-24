@@ -13,7 +13,6 @@ import { toast } from 'sonner';
 import { redirect } from 'next/navigation';
 
 const RegisterForm = ({user,edit}:{user?:any,edit?:boolean}) => {
-
     //this form is used as user form for both update and regiter
      //form state
      const [formData, setFormData] = useState<UserRegisterFormData>({

@@ -58,6 +58,14 @@ export type UpdateRoleClaimState={
   }
 }
 
+export type AddNewRoleState={
+  success?:string | null;
+  submitError?:string | null;
+  errors?:{
+    appRoleName?:string[];
+  }
+}
+
 
 
   

@@ -1,9 +1,16 @@
+import Claims from "@/app/_components/one-time/claims/Claims";
+import Roles from "@/app/_components/one-time/roles/Roles";
+import { getAllClaims } from "@/app/_lib/data/auth";
+import { Metadata } from "next";
 import React from "react";
 
+export const metadata: Metadata = {
+  title: "Claims | Bankify",
+  description: "Bankify - Minimal banking system by finetech",
+};
 export default async function Page() {
-    return (
-        <div>
-            Claims Page Content
-        </div>
-    );
+  const allClaims = await getAllClaims();
+  return (
+   <Claims allClaims={allClaims}/>
+  );
 };

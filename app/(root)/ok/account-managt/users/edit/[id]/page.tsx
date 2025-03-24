@@ -1,13 +1,17 @@
 import RegisterForm from "@/app/_components/one-time/auth/registerForm";
 import { getUserByid } from "@/app/_lib/data/users";
 
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const user = await getUserByid(Number(id));
 
-export default async function Page({ params }: { params: { id: number } }) {
-  const { id } = params;
-  const user=await getUserByid(id)
   return (
-      <div className="mx-auto flex bg-transparent max-w-[600px] flex-col space-y-2.5 p-4 md:-mt-32">
-          <RegisterForm user={user} edit={true}/>
-      </div>
+    <div className="mx-auto flex bg-transparent max-w-[600px] flex-col space-y-2.5 p-4 md:-mt-32">
+      <RegisterForm user={user} edit={true} />
+    </div>
   );
 }
