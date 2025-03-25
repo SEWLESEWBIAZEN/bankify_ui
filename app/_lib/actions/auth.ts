@@ -271,5 +271,22 @@ export async function deleteAppRole(prevState:DeleteState, id:number):Promise<De
     }
     return returnState;  
 }
+export async function deleteAppClaim(prevState:DeleteState, id:number):Promise<DeleteState>
+{      //declaring a return state once
+    let returnState: DeleteState = { success: null, submitError: null }
+    const { accessToken } = await tokenProvider()
+    try {
+        const response = await axiosInstance.delete(`${baseUrl}/AppClaim/Delete?Id=${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+        returnState.success = response.data.message ?? "Claim deleted successfully!";     
+    }
+    catch (e: any) {
+        returnState.submitError =e?.response?.data?.errors[0]?? `${e?.response?.status},${e?.response?.statusText ?? "Unable to delete."}`
+    }
+    return returnState;  
+}
 
 

@@ -1,6 +1,7 @@
 import { Claim } from '@/definitions/type-definitions/auth'
 import { Eye,  Trash } from 'lucide-react'
 import React from 'react'
+import DeleteClaim from './DeleteClaim'
 
 
 const ClaimPage = ({ claim }: { claim: Claim }) => {
@@ -21,10 +22,7 @@ const ClaimPage = ({ claim }: { claim: Claim }) => {
                     size={18}
                     className="text-gray-500 hover:text-stone-600 dark:text-gray-400 dark:hover:text-stone-400 cursor-pointer"
                 />
-                <Trash
-                    size={18}
-                    className="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 cursor-pointer"
-                />
+                <DeleteClaim id={claim.id}/>
             </span>
         </div>
     )
