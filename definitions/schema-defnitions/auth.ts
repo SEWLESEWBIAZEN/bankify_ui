@@ -44,6 +44,10 @@ export const ChangePasswordSchema = z.object({
 
 
   export const AddNewRoleSchema = z.object({
-    appRoleName: z.string(),
+    appRoleName: z.string().min(1,{message:"role name is required."}),
+  
+});
+  export const AddNewClaimSchema = z.object({
+    claimName: z.string().min(1,{message:"Claim name is required."}),
   
 });

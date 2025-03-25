@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const allRoles = await getAllRoles(true);
   return (
-   <Roles allRoles={allRoles}/>
+   <Roles allRoles={allRoles??[]}/>
 
   );
 };

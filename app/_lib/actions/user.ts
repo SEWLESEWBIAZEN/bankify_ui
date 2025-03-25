@@ -5,7 +5,6 @@ import { tokenProvider } from "@/app/_services/tokenService";
 import { DeleteState } from "@/definitions/type-definitions/common";
 
 export async function deleteUser(prevState: DeleteState, id: number): Promise<DeleteState> {
-
     //declaring a return state once
     let returnState: DeleteState = { success: null, submitError: null }
     const { accessToken } = await tokenProvider()

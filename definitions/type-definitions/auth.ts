@@ -65,6 +65,13 @@ export type AddNewRoleState={
     appRoleName?:string[];
   }
 }
+export type AddNewClaimState={
+  success?:string | null;
+  submitError?:string | null;
+  errors?:{
+    claimName?:string[];
+  }
+}
 
 
 

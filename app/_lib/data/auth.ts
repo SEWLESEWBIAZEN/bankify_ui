@@ -19,7 +19,7 @@ export async function getAllRoles(forDropdown: boolean) {
         if (error?.response?.status === 401 || error?.response?.status === 403) {
             redirect("/ok/401");
         }
-        console.error("Error fetching roles:", error?.response.status || error?.message);
+       
         return { success: false, message: "Failed to fetch roles" };
     }
 }
@@ -58,7 +58,7 @@ export async function getAllClaims() {
         if (error?.response?.status === 401 || error?.response?.status === 403) {
             redirect("/ok/401");
         }
-        console.error("Error fetching claims:", error?.response.status || error?.message);
+        
         return { success: false, message: "Failed to fetch claims" };
     }
 }
@@ -77,8 +77,7 @@ export async function getRoleClaims(roleId:number) {
     } catch (error: any) {
         if (error?.response?.status === 401 || error?.response?.status === 403) {
             redirect("/ok/401");
-        }
-        console.error("Error fetching role claims:", error?.response.status || error?.message);
+        }    
         return { success: false, message: "Failed to fetch role claims" };
     }
 }

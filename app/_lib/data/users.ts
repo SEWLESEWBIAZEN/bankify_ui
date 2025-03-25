@@ -19,7 +19,7 @@ export async function getAllUsers() {
         if (error?.response?.status === 401 || error?.response?.status ===403 ) {
             redirect("/ok/401");
       }
-        console.error("Error fetching users:", error?.response.status || error?.message);
+        
         return { success: false, message: "Failed to fetch users" };
     }
 }
@@ -38,7 +38,7 @@ export async function getUserByid(id:number){
         if (error?.response?.status === 401 || error?.response?.status ===403 ) {
             redirect("/ok/401");
       }
-        console.error("Error fetching user:", error?.response.status || error?.message);
+        
         return { success: false, message: "Failed to fetch user" };
     }
 }

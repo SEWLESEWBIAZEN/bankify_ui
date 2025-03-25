@@ -2,6 +2,7 @@ import { Role } from '@/definitions/type-definitions/auth'
 import { Eye,  Trash } from 'lucide-react'
 import React from 'react'
 import AddClaim from './AddClaim'
+import DeleteRole from './DeleteRole'
 
 const RolePage = ({ role }: { role: Role }) => {
     return (
@@ -21,10 +22,7 @@ const RolePage = ({ role }: { role: Role }) => {
                     size={18}
                     className="text-gray-500 hover:text-stone-600 dark:text-gray-400 dark:hover:text-stone-400 cursor-pointer"
                 />
-                <Trash
-                    size={18}
-                    className="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 cursor-pointer"
-                />
+               <DeleteRole id={role.id}/>
             </span>
         </div>
     )

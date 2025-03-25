@@ -5,10 +5,11 @@ import { AuthError } from "next-auth";
 import { axiosInstance } from "@/app/_services/axiosServices";
 import { baseUrl } from "@/app/_services/envService";
 import { tokenProvider } from "@/app/_services/tokenService";
-import { AddNewRoleSchema, RegisterUserSchema, UpdateRoleClaimSchema, UpdateUserRoleSchema } from "@/definitions/schema-defnitions/auth";
-import { AddNewRoleState, UpdateRoleClaimState, UpdateUserRoleState, UserRegisterState } from "@/definitions/type-definitions/auth";
+import { AddNewClaimSchema, AddNewRoleSchema, RegisterUserSchema, UpdateRoleClaimSchema, UpdateUserRoleSchema } from "@/definitions/schema-defnitions/auth";
+import { AddNewClaimState, AddNewRoleState, UpdateRoleClaimState, UpdateUserRoleState, UserRegisterState } from "@/definitions/type-definitions/auth";
 import { redirect } from "next/navigation";
 import { error } from "console";
+import { DeleteState } from "@/definitions/type-definitions/common";
 
 
 //authenticate
@@ -70,12 +71,11 @@ export async function registerUser(
       redirect("/ok/401");
     }
 
-    returnState.submitError = `${e?.response?.status} ${e?.response?.statusText}, ${e.response.data.errors[0] ?? "Error occured while registering user!"}`;
+    returnState.submitError =e?.response?.data?.errors[0]?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while registering user!"}`;
   }
 
   return returnState;
 }
-
 //update user
 export async function updateUser(
   prevState: UserRegisterState,
@@ -117,7 +117,6 @@ export async function updateUser(
 
   return returnState;
 }
-
 export async function addNewRole(prevState: AddNewRoleState, formData: FormData): Promise<AddNewRoleState> {
   const { accessToken } = await tokenProvider();
   const validatedFields = AddNewRoleSchema.safeParse({
@@ -145,16 +144,14 @@ export async function addNewRole(prevState: AddNewRoleState, formData: FormData)
       success: `${response.data.message ?? "Role added Successfully!"}`
     }
   } catch (er: any) {
-    return {
-      submitError: `${er?.response?.status ?? "Error occured while adding new role."} `
+    
+    return {     
+      submitError: `${er?.response?.data?.errors[0]?? er?.response?.statusText ?? "Error occured while adding new role."} `
     }
   }
 }
 
-
-
 export async function updateUserRoles(prevState: UpdateUserRoleState, formData: FormData): Promise<UpdateUserRoleState> {
-
   const { accessToken } = await tokenProvider();
   const validatedFields = UpdateUserRoleSchema.safeParse({
     userId: parseInt(formData.get('userId') as string, 10),
@@ -184,14 +181,46 @@ export async function updateUserRoles(prevState: UpdateUserRoleState, formData: 
       redirect("/ok/401");
     }
     return {
-      submitError: `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating user role!"}`
+      submitError: e?.response?.data?.errors[0]?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating user role!"}`
     };
   }
 
 }
 
-export async function updateRoleClaims(prevState: UpdateRoleClaimState, formData: FormData): Promise<UpdateRoleClaimState> {
+export async function addNewClaim(prevState: AddNewClaimState, formData: FormData): Promise<AddNewClaimState> {
+  const { accessToken } = await tokenProvider();
+  const validatedFields = AddNewClaimSchema.safeParse({
+   claimName: formData.get("claimname"),
+  })
 
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      submitError: "Invalid Claim Name!"
+    }
+  }
+
+  const body = validatedFields.data;
+
+  try {
+    const response = await axiosInstance.post(`${baseUrl}/AppClaim/Create`, body, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json"
+      }
+    })
+
+    return {
+      success: `${response.data.message ?? "Claim added Successfully!"}`
+    }
+  } catch (er: any) {
+    return {
+      submitError: er?.response?.data?.errors[0]??`${er?.response?.status ?? "Error occured while adding new claim."} `
+    }
+  }
+}
+
+export async function updateRoleClaims(prevState: UpdateRoleClaimState, formData: FormData): Promise<UpdateRoleClaimState> {
   const { accessToken } = await tokenProvider();
   const validatedFields = UpdateRoleClaimSchema.safeParse({
     appRoleId: parseInt(formData.get('roleId') as string, 10),
@@ -204,7 +233,6 @@ export async function updateRoleClaims(prevState: UpdateRoleClaimState, formData
     }
   }
   const body = validatedFields.data;
-
   try {
     const response = await axiosInstance.put(`${baseUrl}/AppRole/GrantPrivilege`, body, {
       headers: {
@@ -220,11 +248,28 @@ export async function updateRoleClaims(prevState: UpdateRoleClaimState, formData
       redirect("/ok/401");
     }
     return {
-      submitError: `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating role claim!"}`
+      submitError:e?.response?.data?.errors[0]?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating role claim!"}`
     };
   }
-
 }
 
+export async function deleteAppRole(prevState:DeleteState, id:number):Promise<DeleteState>
+{
+      //declaring a return state once
+    let returnState: DeleteState = { success: null, submitError: null }
+    const { accessToken } = await tokenProvider()
+    try {
+        const response = await axiosInstance.delete(`${baseUrl}/AppRole/Delete?Id=${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+        returnState.success = response.data.message ?? "Role deleted successfully!";     
+    }
+    catch (e: any) {
+        returnState.submitError =e?.response?.data?.errors[0]?? `${e.response.status},${e.response.statusText ?? "Unable to delete."}`
+    }
+    return returnState;  
+}
 
 

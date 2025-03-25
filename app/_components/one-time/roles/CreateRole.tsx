@@ -46,7 +46,7 @@ const CreateRole = () => {
                     {
                         state?.errors && state.errors.appRoleName &&
                         <span>
-                            {state?.errors?.appRoleName?.map((error: string) => <li key={error}>{error}</li>)}
+                            {state?.errors?.appRoleName?.map((error: string) => <li key={error} className='text-[11px] italic text-red-500 my-1' >{error}</li>)}
                         </span>
                     }
                     </div>
