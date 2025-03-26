@@ -8,6 +8,7 @@ import { logOut } from '@/app/_lib/actions/auth';
 import { useCentralStore } from '@/app/CenteralStore';
 import { KeyRound, LogOut, User2Icon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import ChangePassword from '../auth/ChangePassword';
 export default function Sidebar() {
     const { fullName } = useCentralStore();
 
@@ -34,14 +35,8 @@ export default function Sidebar() {
 
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className='bg-slate-100 dark:bg-black dark:text-slate-50 outline-slate-100 text-primary-foreground'>
-                                    <div className='text-center items-center justify-center flex flex-col items-center justify-center gap-2'>
-                                        <button
-                                            type="button"
-                                            className='w-full flex flex-row gap-1 items-center p-1 rounded text-primary dark:text-slate-50  font-mono hover:font-semibold text-sm cursor-pointer'
-                                        >
-                                            <KeyRound size={18} />
-                                            Change Password
-                                        </button>
+                                    <div className='text-center items-center justify-center flex flex-col gap-2'>
+                                        <ChangePassword/>
                                         <hr className='w-full text-center items-center justify-center mt-4' />
                                         <button
                                             type="button"

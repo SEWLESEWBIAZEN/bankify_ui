@@ -51,3 +51,4 @@ export const ChangePasswordSchema = z.object({
     claimName: z.string().min(1,{message:"Claim name is required."}),
   
 });
+

@@ -5,8 +5,8 @@ import { AuthError } from "next-auth";
 import { axiosInstance } from "@/app/_services/axiosServices";
 import { baseUrl } from "@/app/_services/envService";
 import { tokenProvider } from "@/app/_services/tokenService";
-import { AddNewClaimSchema, AddNewRoleSchema, RegisterUserSchema, UpdateRoleClaimSchema, UpdateUserRoleSchema } from "@/definitions/schema-defnitions/auth";
-import { AddNewClaimState, AddNewRoleState, UpdateRoleClaimState, UpdateUserRoleState, UserRegisterState } from "@/definitions/type-definitions/auth";
+import { AddNewClaimSchema, AddNewRoleSchema, ChangePasswordSchema, RegisterUserSchema, UpdateRoleClaimSchema, UpdateUserRoleSchema } from "@/definitions/schema-defnitions/auth";
+import { AddNewClaimState, AddNewRoleState, ChangePasswordState, UpdateRoleClaimState, UpdateUserRoleState, UserRegisterState } from "@/definitions/type-definitions/auth";
 import { redirect } from "next/navigation";
 import { error } from "console";
 import { DeleteState } from "@/definitions/type-definitions/common";
@@ -71,7 +71,7 @@ export async function registerUser(
       redirect("/ok/401");
     }
 
-    returnState.submitError =e?.response?.data?.errors[0]?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while registering user!"}`;
+    returnState.submitError = e?.response?.data?.errors[0] ?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while registering user!"}`;
   }
 
   return returnState;
@@ -117,6 +117,50 @@ export async function updateUser(
 
   return returnState;
 }
+
+//change password
+export async function changePassword(prevState: ChangePasswordState, formData: FormData): Promise<ChangePasswordState> {
+
+  const { accessToken } = await tokenProvider();
+
+  const validatedFields = ChangePasswordSchema.safeParse({
+    oldPassword: formData.get("oldPassword"),
+    newPassword: formData.get("newPassword"),
+    confirmPassword: formData.get("confirmPassword"),
+  })
+
+  if (!validatedFields.success) {
+
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      submitError: "Invalid body sent!"
+    }
+  }
+  const body = validatedFields.data;
+
+  const updatedBody = {
+    OldPassword: body.oldPassword,
+    NewPassword: body.newPassword
+  }
+
+  try {
+    const response = await axiosInstance.put(`${baseUrl}/Auth/ChangePassword`, updatedBody, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    return {
+      success: `${response.data.message ?? "Password changed successfully"}`
+    }
+  }
+  catch (e: any) {
+    return {
+      submitError: `${e.response?.data?.errors[0] ?? "Error occured while changing password."}`
+    }
+  }
+}
+
+
 export async function addNewRole(prevState: AddNewRoleState, formData: FormData): Promise<AddNewRoleState> {
   const { accessToken } = await tokenProvider();
   const validatedFields = AddNewRoleSchema.safeParse({
@@ -144,9 +188,9 @@ export async function addNewRole(prevState: AddNewRoleState, formData: FormData)
       success: `${response.data.message ?? "Role added Successfully!"}`
     }
   } catch (er: any) {
-    
-    return {     
-      submitError: `${er?.response?.data?.errors[0]?? er?.response?.statusText ?? "Error occured while adding new role."} `
+
+    return {
+      submitError: `${er?.response?.data?.errors[0] ?? er?.response?.statusText ?? "Error occured while adding new role."} `
     }
   }
 }
@@ -181,7 +225,7 @@ export async function updateUserRoles(prevState: UpdateUserRoleState, formData: 
       redirect("/ok/401");
     }
     return {
-      submitError: e?.response?.data?.errors[0]?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating user role!"}`
+      submitError: e?.response?.data?.errors[0] ?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating user role!"}`
     };
   }
 
@@ -190,7 +234,7 @@ export async function updateUserRoles(prevState: UpdateUserRoleState, formData: 
 export async function addNewClaim(prevState: AddNewClaimState, formData: FormData): Promise<AddNewClaimState> {
   const { accessToken } = await tokenProvider();
   const validatedFields = AddNewClaimSchema.safeParse({
-   claimName: formData.get("claimname"),
+    claimName: formData.get("claimname"),
   })
 
   if (!validatedFields.success) {
@@ -215,7 +259,7 @@ export async function addNewClaim(prevState: AddNewClaimState, formData: FormDat
     }
   } catch (er: any) {
     return {
-      submitError: er?.response?.data?.errors[0]??`${er?.response?.status ?? "Error occured while adding new claim."} `
+      submitError: er?.response?.data?.errors[0] ?? `${er?.response?.status ?? "Error occured while adding new claim."} `
     }
   }
 }
@@ -248,45 +292,43 @@ export async function updateRoleClaims(prevState: UpdateRoleClaimState, formData
       redirect("/ok/401");
     }
     return {
-      submitError:e?.response?.data?.errors[0]?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating role claim!"}`
+      submitError: e?.response?.data?.errors[0] ?? `${e?.response?.status} ${e?.response?.statusText} ?? "Error occured while updating role claim!"}`
     };
   }
 }
 
-export async function deleteAppRole(prevState:DeleteState, id:number):Promise<DeleteState>
-{
-      //declaring a return state once
-    let returnState: DeleteState = { success: null, submitError: null }
-    const { accessToken } = await tokenProvider()
-    try {
-        const response = await axiosInstance.delete(`${baseUrl}/AppRole/Delete?Id=${id}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
-        returnState.success = response.data.message ?? "Role deleted successfully!";     
-    }
-    catch (e: any) {
-        returnState.submitError =e?.response?.data?.errors[0]?? `${e.response.status},${e.response.statusText ?? "Unable to delete."}`
-    }
-    return returnState;  
+export async function deleteAppRole(prevState: DeleteState, id: number): Promise<DeleteState> {
+  //declaring a return state once
+  let returnState: DeleteState = { success: null, submitError: null }
+  const { accessToken } = await tokenProvider()
+  try {
+    const response = await axiosInstance.delete(`${baseUrl}/AppRole/Delete?Id=${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    returnState.success = response.data.message ?? "Role deleted successfully!";
+  }
+  catch (e: any) {
+    returnState.submitError = e?.response?.data?.errors[0] ?? `${e.response.status},${e.response.statusText ?? "Unable to delete."}`
+  }
+  return returnState;
 }
-export async function deleteAppClaim(prevState:DeleteState, id:number):Promise<DeleteState>
-{      //declaring a return state once
-    let returnState: DeleteState = { success: null, submitError: null }
-    const { accessToken } = await tokenProvider()
-    try {
-        const response = await axiosInstance.delete(`${baseUrl}/AppClaim/Delete?Id=${id}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
-        returnState.success = response.data.message ?? "Claim deleted successfully!";     
-    }
-    catch (e: any) {
-        returnState.submitError =e?.response?.data?.errors[0]?? `${e?.response?.status},${e?.response?.statusText ?? "Unable to delete."}`
-    }
-    return returnState;  
+export async function deleteAppClaim(prevState: DeleteState, id: number): Promise<DeleteState> {      //declaring a return state once
+  let returnState: DeleteState = { success: null, submitError: null }
+  const { accessToken } = await tokenProvider()
+  try {
+    const response = await axiosInstance.delete(`${baseUrl}/AppClaim/Delete?Id=${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    returnState.success = response.data.message ?? "Claim deleted successfully!";
+  }
+  catch (e: any) {
+    returnState.submitError = e?.response?.data?.errors[0] ?? `${e?.response?.status},${e?.response?.statusText ?? "Unable to delete."}`
+  }
+  return returnState;
 }
 
 
